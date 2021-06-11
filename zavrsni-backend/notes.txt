@@ -1,0 +1,5 @@
+implement rate limiter?
+
+function to process datetimes?
+
+try catch everywhere?
