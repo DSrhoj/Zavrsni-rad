@@ -11,7 +11,17 @@ if (envFound.error) {
 }
 
 // Exports data from env file
-module.exports = {   
+module.exports = {
     port: process.env.PORT,
     api: process.env.ROOT,
+    jwt: {
+        secret: process.env.JWT_SECRET,
+        algorithms: ["HS256"],
+        expiresIn: process.env.JWT_DURATION || "1h",
+        exclude: {
+            path: [
+                { url: "/api/login", methods: ["POST"] },
+            ],
+        },
+    },
 }

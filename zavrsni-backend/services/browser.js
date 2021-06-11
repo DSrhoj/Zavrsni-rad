@@ -32,5 +32,4 @@ module.exports = class myBrowser {
             this.pageList
         )
     }
-
 }

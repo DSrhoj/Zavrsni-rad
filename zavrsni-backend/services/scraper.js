@@ -9,6 +9,7 @@ module.exports = class Scraper extends Navigators {
         const events = await page.evaluate(() =>
             // Selects all events that are displayed
             Array.from(document.querySelectorAll('.event')).map(event => {
+                
                 // Extracting all data from events
                 const name = event.querySelector('.name.normal').innerText.trim();
                 const shortName = event.querySelector('.name.short').innerText.trim();
