@@ -7,17 +7,17 @@ const { nodelogger } = require('../loaders/logger');
 module.exports = class JWTGenerator {
 
     // Function that returns jwt with page index so that user can send it to server every time it gets data from it
-    async generateJWT(pageIndex) {
+    async generateJWT(browserIndex) {
 
         // Create payload for jwt
         const payload = {
-            pageIndex: pageIndex,
+            browserIndex: browserIndex,
             aud: config.jwt.audience || "localhost/api",
             iss: config.jwt.issuer || "server",
         }
 
         // Logg that jwt is signed
-        nodelogger.info(`Sign JWT for loggined user: pageIndex(${pageIndex})`);
+        nodelogger.info(`Sign JWT for loggined user: browserIndex(${browserIndex})`);
 
         // Generate token from payload
         const token = this.generateToken(payload);

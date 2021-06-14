@@ -3,3 +3,8 @@ implement rate limiter?
 function to process datetimes?
 
 try catch everywhere?
+
+cant use same browser because remebers the login!!! ==> has to be more  browsers --> DONE
+
+implement that new browser is created at array index where browser is null so it doesnt grow endlessly
+

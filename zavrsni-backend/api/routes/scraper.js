@@ -12,4 +12,5 @@ module.exports = function (main_route) {
     main_route.use('/', scraper);
     scraper.post('/login', scraper_controller.login);
     scraper.get('/getEvents', authorization_controller.authorize, scraper_controller.getEvents);
+    scraper.get('/getAttendance', authorization_controller.authorize, scraper_controller.getAttendance);
 }

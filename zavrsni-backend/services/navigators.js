@@ -10,14 +10,15 @@ module.exports = class Navigatiors extends myBrowser {
     }
 
     // Function to navigate to attendance page
-    async gotoRaspored(page) {
+    async gotoSchedule(page) {
         await page.goto('https://raspored.fesb.unist.hr/raspored/osobni');
         await page.waitForSelector('.events');
     }
 
     // Function to navigate to attendance page
-    async gotoPrisutnost(page) {
+    async gotoAttendance(page) {
         await page.goto('https://raspored.fesb.unist.hr/prisutnost/opcenito');
+        await page.waitForSelector('.categoryAttendance');
     }
 
     // Input login data and submit form

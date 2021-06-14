@@ -2,34 +2,33 @@ const puppeteer = require('puppeteer');
 
 module.exports = class myBrowser {
     constructor() {
-        this.browser = null;
-        this.pageList = []
+        this.browsers = [];
     }
 
     // Function for creating browser
-    async createBrowser() {
-        this.browser = await puppeteer.launch();
+    async createBrowserAndPage() {
+        // Create new browser
+        let newBrowser = await puppeteer.launch();
+
+        // Create new page for new frowser
+        let newBrowserPage = await newBrowser.newPage();
+
+        // Push new browser in browsers list
+        this.browsers.push({
+            browser: newBrowser,
+            page: newBrowserPage
+        });
     }
 
     // Function for closing browser
-    async closeBrowser() {
-        this.browser.close();
+    async closeBrowser(browserIndex) {
+        this.browsers[browserIndex].browser.close();
     }
 
-    // Function for creating new page
-    async createPage() {
-        this.pageList.push(await this.browser.newPage());
-    }
-
-    // Function for closing page sent via props
-    async closePage(page) {
-        page.close();
-    }
-
-    // Function that returns list of pages
-    async getListOfPages() {
+    // Function that returns list of browsers
+    async getListOfBrowsers() {
         return (
-            this.pageList
+            this.browsers
         )
     }
 }

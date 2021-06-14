@@ -9,7 +9,7 @@ module.exports = class Scraper extends Navigators {
         const events = await page.evaluate(() =>
             // Selects all events that are displayed
             Array.from(document.querySelectorAll('.event')).map(event => {
-                
+
                 // Extracting all data from events
                 const name = event.querySelector('.name.normal').innerText.trim();
                 const shortName = event.querySelector('.name.short').innerText.trim();
@@ -53,5 +53,51 @@ module.exports = class Scraper extends Navigators {
 
         // Returning list of objets with event data
         return events;
+    }
+
+    async getAttendance(page) {
+
+        // Function that returns list of classes
+        const attendance = await page.evaluate(() =>
+        
+            // Selects all semesters
+            Array.from(document.querySelectorAll('.semster')).map(semester => {
+
+                // Returns object with name of semester and array of classes in that semester
+                return ({
+                    semester: semester.querySelector('.semsterHeader').innerText,
+
+                    // Selects all classes in semester
+                    classes: Array.from(semester.querySelectorAll('.row')).map(row => {
+
+                        // Returns object with name of class and attendance for that class
+                        return ({
+                            name: row.querySelector('.fullName.firstColumn > .cellContent').innerText,
+
+                            // Selects all attendances for class
+                            attendance: Array.from(row.querySelectorAll('.cell.category')).map(attendance => {
+
+                                // Gets attendance
+                                let tempAttendance = attendance.querySelector('.categoryAttendance');
+                                let tempAttendancePercentage = attendance.querySelector('.categoryAttendancePercent');
+
+                                // Checks if attendance exists (means that segment of class exists)
+                                if (tempAttendance != null) {
+
+                                    // If exists return data
+                                    return {
+                                        attendance: tempAttendance.innerText,
+                                        attendancePercentage: tempAttendancePercentage.innerText
+                                    };
+                                }
+                            })
+                        })
+                    })
+                })
+            })
+        )
+
+        // Returning list of objets with attendance data
+        return attendance;
     }
 }

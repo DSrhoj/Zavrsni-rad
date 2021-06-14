@@ -6,9 +6,6 @@ const JWTGenerator_instance = new JWTGenerator();
 
 // Create an instance of Scraper class
 const scraper_instance = new Scraper();
-// Create browser
-scraper_instance.createBrowser();
-
 
 // Exportng instance of class (like global variable)
 module.exports = {
