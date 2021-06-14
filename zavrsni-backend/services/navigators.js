@@ -11,14 +11,22 @@ module.exports = class Navigatiors extends myBrowser {
 
     // Function to navigate to attendance page
     async gotoSchedule(page) {
-        await page.goto('https://raspored.fesb.unist.hr/raspored/osobni');
-        await page.waitForSelector('.events');
+        // Check if page is already on wanted url (schedule)
+        if (await page.url() != 'https://raspored.fesb.unist.hr/raspored/osobni') {
+            // If not go to schedule
+            await page.goto('https://raspored.fesb.unist.hr/raspored/osobni');
+            await page.waitForSelector('.events');
+        }
     }
 
     // Function to navigate to attendance page
     async gotoAttendance(page) {
-        await page.goto('https://raspored.fesb.unist.hr/prisutnost/opcenito');
-        await page.waitForSelector('.categoryAttendance');
+        // Check if page is already on wanted url (attendance)
+        if (await page.url() != 'https://raspored.fesb.unist.hr/prisutnost/opcenito') {
+            // If not go to attendance
+            await page.goto('https://raspored.fesb.unist.hr/prisutnost/opcenito');
+            await page.waitForSelector('.categoryAttendance');
+        }
     }
 
     // Input login data and submit form
@@ -48,14 +56,21 @@ module.exports = class Navigatiors extends myBrowser {
         }
     }
 
-    // Function to navigate one month backward
-    async previousMonth(page) {
-        await page.click('.ui-icon-circle-triangle-w');
+    // Funtion to logout
+    async logout({ browser, page }) {
+        await page.goto('https://korisnik.fesb.unist.hr/odjava?returnUrl=https://raspored.fesb.unist.hr');
+        await page.close();
+        await browser.close();
     }
 
     // Function to navigate one month forward
     async nextMonth(page) {
         await page.click('.ui-icon-circle-triangle-e');
+    }
+
+    // Function to navigate one month backward
+    async previousMonth(page) {
+        await page.click('.ui-icon-circle-triangle-w');
     }
 
     // Function to click on day of month that user selected

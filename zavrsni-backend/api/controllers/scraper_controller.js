@@ -38,6 +38,19 @@ module.exports = {
         }
     },
 
+    // Logout function that logs out closes browser and page
+    logout: async (req, res, next) => {
+        try {
+            // Logout function
+            await scraper_instance.logout(scraper_instance.browsers[req.token.browserIndex]);
+            res.json("Logged out succesfully");
+
+        } catch (error) {
+            nodelogger.error('Error in logging out!');
+            next(error);
+        }
+    },
+
     // Function that gets events for selected date
     getEvents: async (req, res, next) => {
 
@@ -59,9 +72,56 @@ module.exports = {
         }
     },
 
-    //! Function for changing month
+    // Function for changing month to next
+    //! should change week to change what getEvents returns
+    changeMonthNext: async (req, res, next) => {
+        try {
+            // Change month to next function
+            await scraper_instance.nextMonth(scraper_instance.browsers[req.token.browserIndex].page);
 
-    //! function for changing week
+            //! should change week to change what change events returns
+            // await scraper_instance.changeWeek(scraper_instance.browsers[req.token.browserIndex].page, 3);
+
+            console.log(`Changed to next month for user ${req.token.browserIndex}`)
+            res.json("Succesfull");
+
+        } catch (error) {
+            nodelogger.error('Error in logging out!');
+            next(error);
+        }
+    },
+
+    // Function for changing month to previous
+    //! should change week to change what getEvents returns
+    changeMonthPrevious: async (req, res, next) => {
+        try {
+            // Change month to previous function
+            await scraper_instance.previousMonth(scraper_instance.browsers[req.token.browserIndex].page);
+
+            console.log(`Changed to previous month for user ${req.token.browserIndex}`)
+            res.json("Succesfull");
+
+
+        } catch (error) {
+            nodelogger.error('Error in logging out!');
+            next(error);
+        }
+    },
+
+    // Function for changing week
+    changeWeek: async (req, res, next) => {
+        try {
+            // Chenge week by selected day
+            await scraper_instance.changeWeek(scraper_instance.browsers[req.token.browserIndex].page, req.body.selectedDayOfWeek);
+
+            console.log(`Changed week for user ${req.token.browserIndex}`)
+            res.json("Succesfull");
+
+        } catch (error) {
+            nodelogger.error('Error in logging out!');
+            next(error);
+        }
+    },
 
     // Function that returns classes and attendance for each
     getAttendance: async (req, res, next) => {
