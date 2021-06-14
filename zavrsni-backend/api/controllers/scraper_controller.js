@@ -8,11 +8,8 @@ module.exports = {
     // Function that checks input data and sends jwt as res
     login: async (req, res, next) => {
         try {
-            // Creates new page when user trys to login
-            await scraper_instance.createBrowserAndPage();
-
-            // Gets page index of last created page
-            let browserIndex = scraper_instance.browsers.length - 1;
+            // Creates new page when user trys to login and gets its index
+            let browserIndex = await scraper_instance.createBrowserAndPage();
 
             // Try to login user with sent data (was successful if returns 0)
             let loginFailed = await scraper_instance.login(scraper_instance.browsers[browserIndex].page, req.body.username, req.body.password);
@@ -27,7 +24,7 @@ module.exports = {
             }
             else {
                 // Login was successful
-                nodelogger.info("Login successful");
+                nodelogger.info(`Login successful for user (${browserIndex})`);
                 let token = await JWTGenerator_instance.generateJWT(browserIndex);
                 res.json({ token: token });
             }
@@ -43,7 +40,10 @@ module.exports = {
         try {
             // Logout function
             await scraper_instance.logout(scraper_instance.browsers[req.token.browserIndex]);
-            res.json("Logged out succesfully");
+
+            // Console log info
+            nodelogger.info(`Logout successful for user (${req.token.browserIndex})`);
+            res.json("Logout successful");
 
         } catch (error) {
             nodelogger.error('Error in logging out!');
@@ -53,17 +53,15 @@ module.exports = {
 
     // Function that gets events for selected date
     getEvents: async (req, res, next) => {
-
         try {
-
             // Go to Schedule page to be sure (because we might not be)
             await scraper_instance.gotoSchedule(scraper_instance.browsers[req.token.browserIndex].page);
 
             // Get events in current week
             let events = await scraper_instance.getEvents(scraper_instance.browsers[req.token.browserIndex].page);
 
-            // Console log events
-            // nodelogger.info(events);
+            // Console log info
+            nodelogger.info(`Get events successful for user (${req.token.browserIndex})`);
             res.json(events);
 
         } catch (error) {
@@ -76,13 +74,17 @@ module.exports = {
     //! should change week to change what getEvents returns
     changeMonthNext: async (req, res, next) => {
         try {
+            // Go to Schedule page to be sure (because we might not be)
+            await scraper_instance.gotoSchedule(scraper_instance.browsers[req.token.browserIndex].page);
+
             // Change month to next function
             await scraper_instance.nextMonth(scraper_instance.browsers[req.token.browserIndex].page);
 
             //! should change week to change what change events returns
             // await scraper_instance.changeWeek(scraper_instance.browsers[req.token.browserIndex].page, 3);
 
-            console.log(`Changed to next month for user ${req.token.browserIndex}`)
+            // Console log info
+            nodelogger.info(`Changed to next month for user (${req.token.browserIndex})`)
             res.json("Succesfull");
 
         } catch (error) {
@@ -95,12 +97,15 @@ module.exports = {
     //! should change week to change what getEvents returns
     changeMonthPrevious: async (req, res, next) => {
         try {
+            // Go to Schedule page to be sure (because we might not be)
+            await scraper_instance.gotoSchedule(scraper_instance.browsers[req.token.browserIndex].page);
+
             // Change month to previous function
             await scraper_instance.previousMonth(scraper_instance.browsers[req.token.browserIndex].page);
 
-            console.log(`Changed to previous month for user ${req.token.browserIndex}`)
+            // Console log info
+            nodelogger.info(`Changed to previous month for user (${req.token.browserIndex})`)
             res.json("Succesfull");
-
 
         } catch (error) {
             nodelogger.error('Error in logging out!');
@@ -111,10 +116,14 @@ module.exports = {
     // Function for changing week
     changeWeek: async (req, res, next) => {
         try {
+            // Go to Schedule page to be sure (because we might not be)
+            await scraper_instance.gotoSchedule(scraper_instance.browsers[req.token.browserIndex].page);
+
             // Chenge week by selected day
             await scraper_instance.changeWeek(scraper_instance.browsers[req.token.browserIndex].page, req.body.selectedDayOfWeek);
 
-            console.log(`Changed week for user ${req.token.browserIndex}`)
+            // Console log info
+            nodelogger.info(`Changed week for user (${req.token.browserIndex})`)
             res.json("Succesfull");
 
         } catch (error) {
@@ -125,7 +134,6 @@ module.exports = {
 
     // Function that returns classes and attendance for each
     getAttendance: async (req, res, next) => {
-
         try {
             // Go to attendance page to be sure (because we might not be)
             await scraper_instance.gotoAttendance(scraper_instance.browsers[req.token.browserIndex].page);
@@ -133,8 +141,8 @@ module.exports = {
             // Get events in current week
             let attendance = await scraper_instance.getAttendance(scraper_instance.browsers[req.token.browserIndex].page);
 
-            // Console log events
-            // nodelogger.info(attendance);
+            // Console log info
+            nodelogger.info(`Get attendance successful for user (${req.token.browserIndex})`);
             res.json(attendance);
 
         } catch (error) {

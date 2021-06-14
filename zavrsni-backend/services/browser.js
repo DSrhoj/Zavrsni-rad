@@ -5,7 +5,7 @@ module.exports = class myBrowser {
         this.browsers = [];
     }
 
-    // Function for creating browser
+    // Function for creating browser that returns index of browser
     async createBrowserAndPage() {
         // Create new browser
         let newBrowser = await puppeteer.launch();
@@ -13,11 +13,32 @@ module.exports = class myBrowser {
         // Create new page for new frowser
         let newBrowserPage = await newBrowser.newPage();
 
-        // Push new browser in browsers list
-        this.browsers.push({
-            browser: newBrowser,
-            page: newBrowserPage
-        });
+        // Serch for index of some browser in array that is closed
+        let index = 0;
+
+        // Go through browsers
+        while (index < this.browsers.length && this.browsers[index].browser._process.killed == false) {
+            index++;
+        }
+
+        // If there is no closed browser
+        if (index == this.browsers.length) {
+            // Push new browser in browsers list
+            this.browsers.push({
+                browser: newBrowser,
+                page: newBrowserPage
+            });
+        }
+
+        // If there is closed browser
+        else {
+            // Chenge existing browser
+            this.browsers[index].browser = newBrowser;
+            this.browsers[index].page = newBrowserPage;
+        }
+
+        // Return index of browser
+        return index;
     }
 
     // Function for closing browser
