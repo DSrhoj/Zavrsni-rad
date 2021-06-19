@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Keyboard } from 'react-native';
 import { StyleSheet, Text, View, TouchableHighlight, Alert } from 'react-native';
+import { useUserUpdate } from '../components/UserContex';
+import { useTheme } from 'react-native-paper';
 import Input from '../components/Input'
 import { login } from '../fetch';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useUser, useUserUpdate } from '../components/UserContex';
+
 
 const LoginScreen = props => {
 
@@ -23,7 +25,9 @@ const LoginScreen = props => {
 
     // Variables from user context
     const userUpdate = useUserUpdate();
-    const user = useUser();
+
+    // Variables from user context
+    const { colors } = useTheme();
 
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
@@ -51,7 +55,7 @@ const LoginScreen = props => {
             // Setting login data to display for user
             userUpdate(data);
         }
-    
+
         // If something was wrong
         else {
             Alert.alert('Login failed!');
@@ -59,7 +63,7 @@ const LoginScreen = props => {
     };
 
     return (
-        <View style={styles.container}>
+        <View style={{ ...styles.container, backgroundColor: colors.background }}>
             <View style={styles.logInTitle}>
                 <Text style={styles.logInText}>LogIn</Text>
             </View>
@@ -68,8 +72,8 @@ const LoginScreen = props => {
                 <Input label="Password" text={password} setText={setPassword} isPassword={true} />
             </View>
             <TouchableHighlight style={styles.button} onPress={handlePotvrdi} activeOpacity={0.65}>
-                <View style={styles.buttonViewLogin}>
-                    <Text style={styles.buttonText}>Log in</Text>
+                <View style={{ ...styles.buttonViewLogin, backgroundColor: colors.primary }}>
+                    <Text style={{ ...styles.buttonText, color: colors.background }}>Log in</Text>
                 </View>
             </TouchableHighlight>
         </View >

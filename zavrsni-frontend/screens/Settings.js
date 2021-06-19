@@ -1,63 +1,54 @@
 import React from 'react';
-import { View, StyleSheet, Alert } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { useTheme } from 'react-native-paper';
+import { useUserUpdate } from '../components/UserContex';
 import SettingsList from 'react-native-settings-list';
 import Header from '../components/Header';
 import { logout } from '../fetch';
 import { removeToken } from '../functions';
 
-
-import { useUserUpdate } from '../components/UserContex';
-
 const Settings = props => {
 
+    // Variables from user context
     const userUpdate = useUserUpdate();
 
+    // Variables from theme context
+    const { colors } = useTheme();
+
     const handleLogOut = async () => {
+        // Log out on server
         let res = await logout();
         if (res) {
+            // if logout was succsessful remove user and token
             userUpdate(null);
             removeToken();
         }
     }
 
     return (
-        <View style={styles.container}>
+        <View style={{ ...styles.container, backgroundColor: colors.background }}>
             <Header title={'Settings'} />
-            <SettingsList borderColor="#6200EE">
-                <SettingsList.Header headerStyle={styles.header} />
+            <SettingsList borderColor={colors.accent}>
+                <SettingsList.Header />
                 <SettingsList.Item
-                    title='Dodaj polaznika'
-                    onPress={() => Alert.alert('Dodan!')}
-                />
-                <SettingsList.Item
-                    title='Dark theme'
-                    hasSwitch={true}
-                    hasNavArrow={false}
-                    switchOnValueChange={() => Alert.alert('Upaljen dark mode je, je')}
-                />
-                <SettingsList.Item
-                    title='Grupa postavki'
-                    onPress={() => Alert.alert('Neka grupa postavki')}
-                />
-                <SettingsList.Header headerStyle={{ ...styles.header, marginTop: 0 }} />
-                <SettingsList.Item
-                    title='Račun'
+                    title='Account'
                     hasNavArrow={false}
                     borderHide="Both"
-                    titleStyle={styles.title}
+                    titleStyle={{ ...styles.title, color: colors.accent }}
                 />
-                <SettingsList.Item title='Security' />
+                <SettingsList.Item
+                    title='Security'
+                />
                 <SettingsList.Item
                     title='Log Out'
                     hasNavArrow={false}
                     onPress={handleLogOut}
                 />
-
             </SettingsList>
         </View>
     );
 }
-//
+
 const styles = StyleSheet.create({
     container: {
         height: "100%",
@@ -65,18 +56,11 @@ const styles = StyleSheet.create({
         backgroundColor: "#f6f6f6",
     },
 
-    header: {
-        //backgroundColor: "#6200EE",
-        //color: '#6200EE',
-        marginTop: 10,
-    },
-
     title: {
         fontWeight: 'bold',
         fontSize: 20,
-        color: '#6200EE',
     }
-
 });
+
 
 export default Settings;

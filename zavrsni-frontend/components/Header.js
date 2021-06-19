@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Appbar, Provider } from 'react-native-paper';
 
 const Header = (props) => {
 
-    const title = props.title !== undefined ? props.title : props.scene.descriptor.options.headerTitle;
-
     return (
         <Appbar.Header>
-            <Appbar.Content title={title} />
+            <Appbar.Content title={props.title} />
         </Appbar.Header>
     );
 };

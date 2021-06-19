@@ -3,13 +3,16 @@ import { Text } from 'react-native';
 import { BottomNavigation } from 'react-native-paper';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 import SLIIcon from 'react-native-vector-icons/SimpleLineIcons';
+import Schedule from '../screens/Schedule';
+import Attendance from '../screens/Attendance';
 import Settings from '../screens/Settings';
+
 
 const Navigation = (props) => {
 
-    const scheduleRoute = () => <Text>raspored</Text>;
+    const scheduleRoute = Schedule;
 
-    const attendanceRoute = () => <Text>prisutnost</Text>;
+    const attendanceRoute = Attendance;
 
     const settingsRoute = Settings;
 
