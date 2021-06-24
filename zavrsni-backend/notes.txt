@@ -8,3 +8,4 @@ cant use same browser because remebers the login!!! ==> has to be more  browsers
 
 implement that new browser is created at array index where browser is null so it doesnt grow endlessly --> DONE
 
+check if page is null and request login if it is!!! happens when server resets 

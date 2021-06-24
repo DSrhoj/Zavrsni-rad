@@ -45,8 +45,8 @@ module.exports = class Navigatiors extends myBrowser {
         await page.waitForNavigation();
 
         // Check if authorization failed
-        if (page.$('.field-validation-error') == null) {
-
+        if (await page.$('.field-validation-error') == null) {
+            
             // Authorization failed
             return 1;
         }

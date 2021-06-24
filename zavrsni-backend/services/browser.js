@@ -43,7 +43,11 @@ module.exports = class myBrowser {
 
     // Function for closing browser
     async closeBrowser(browserIndex) {
-        this.browsers[browserIndex].browser.close();
+        // Close page
+        await this.browsers[browserIndex].page.close();
+
+        // Close browser
+        await this.browsers[browserIndex].browser.close();
     }
 
     // Function that returns list of browsers

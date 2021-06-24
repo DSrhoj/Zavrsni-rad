@@ -12,14 +12,14 @@ module.exports = {
             let browserIndex = await scraper_instance.createBrowserAndPage();
 
             // Try to login user with sent data (was successful if returns 0)
-            let loginFailed = await scraper_instance.login(scraper_instance.browsers[browserIndex].page, req.body.username, req.body.password);
-
+            let loginSuccessful = await scraper_instance.login(scraper_instance.browsers[browserIndex].page, req.body.username, req.body.password);
+            
             // Check if login was successful
-            if (loginFailed) {
+            if (!loginSuccessful) {
                 // Login was not successful
                 // Invalid data
-                await scraper_instance.closeBrowser(scraper_instance.browsers[browserIndex].browser);
-                nodelogger.error("Invalid data!");
+                await scraper_instance.closeBrowser(browserIndex);
+                nodelogger.info("Invalid data!");
                 res.status(403).json("Forbidden access! Invalid data!");
             }
             else {
