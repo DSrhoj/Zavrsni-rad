@@ -15,7 +15,7 @@ export default function App() {
   }
 
   return (
-    // Wrap everything with user provider so every component can rach it
+    // Wrap everything with user provider so every component can reach it
     <UserProvider>
       <PaperProvider theme={theme}>
         <Index />

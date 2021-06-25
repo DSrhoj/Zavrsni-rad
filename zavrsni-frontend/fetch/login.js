@@ -26,11 +26,12 @@ module.exports = async function login(username, password) {
             // console.log(data);
             return data;
         }
-        
+
         else {
             // Request failed
             return null;
         }
+
     } catch (error) {
         // Error in fetching data
         Alert.alert(error.message)

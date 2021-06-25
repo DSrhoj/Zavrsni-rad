@@ -1,6 +1,7 @@
 import { Alert } from "react-native";
+import { getToken } from '../functions';
 
-module.exports = async function getEvents(token) {
+module.exports = async function getEvents() {
     try {
         // Set request options
         const fetchOptions = {
@@ -8,7 +9,7 @@ module.exports = async function getEvents(token) {
             headers: {
                 "Accept": "application/json",
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token.token
+                'Authorization': 'Bearer ' + await getToken()
             },
             mode: 'corse',
         };
@@ -23,7 +24,7 @@ module.exports = async function getEvents(token) {
             // console.log(data);
             return data;
         }
-        
+
         else {
             // Request failed
             return null;

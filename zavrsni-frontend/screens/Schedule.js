@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Header from '../components/Header';
+import { formatEvents } from '../functions';
+import { getEvents } from '../fetch';
 // import DodajSat from '../DodajSatModal/DodajSat';
 // import fetchTermini from '../../functions/fetchTermini'
 // import ChangeWeekModal from '../ChangeWeekModal';
@@ -10,12 +12,26 @@ import Header from '../components/Header';
 const Schedule = props => {
 
     const [changeWeekModalVisible, setChangeWeekModalVisible] = useState(false);
+    const [events, setEvents] = useState([]);
     const [dateTime, setDateTime] = useState(new Date(Date.now()));
+
+
+    async function refreshEvents() {
+        // Get events from server
+        let events = await getEvents();
+
+        // Format events data to presentation format
+        let formatedEvents = await formatEvents(events, dateTime);
+
+        // Set use state to new events
+        setEvents(formatedEvents);
+    }
 
     // Happens on render and every re-render when at least one array argument changes value
     useEffect(() => {
-        // Fetch termini and update dani
-        //! fetchTermini.updateDani({ setDani, date_time: format(dateTime, "yyyy-MM-dd HH:mm:ss.SSSx") });
+
+        // Get events from server and refresh screen
+        refreshEvents();
     },
         // Happens when dateTime changes its value
         [dateTime]
@@ -25,6 +41,7 @@ const Schedule = props => {
         <View style={styles.container}>
             <Header title={'Schedule'} />
             <View style={styles.schedule}>
+                {events.map(element => element)}
             </View>
         </View>
     );
