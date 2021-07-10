@@ -2,15 +2,17 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableHighlight, Modal } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import CalendarPicker from 'react-native-calendar-picker';
+import moment from 'moment';
 
 const CalendarModal = (props) => {
 
-    const [date, setDate] = useState();
+    const [date, setDate] = useState(moment(props.dateTime));
+
     // Variables from theme context
     const { colors } = useTheme();
 
     const onDateChange = (date) => {
-        setDate(date.toDate())
+        setDate(date)
     }
 
     const hideModal = () => {
@@ -18,11 +20,12 @@ const CalendarModal = (props) => {
     }
 
     const onOk = () => {
-        props.setDateTime(date);
+        props.setDateTime(date.toDate());
         hideModal();
     }
 
     const onCancel = () => {
+        setDate(moment(props.dateTime))
         hideModal();
     }
 
@@ -35,6 +38,8 @@ const CalendarModal = (props) => {
                         selectedDayColor={colors.primary}
                         todayBackgroundColor={colors.accent}
                         onDateChange={onDateChange}
+                        initialDate={moment(props.dateTime)}
+                        selectedStartDate={date}
                     />
                 </View>
                 <View style={styles.buttonsContainer}>

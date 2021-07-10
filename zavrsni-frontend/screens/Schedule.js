@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
 import CalendarModal from '../components/CalendarModal';
 import Header from '../components/Header';
 import { useTheme } from 'react-native-paper';
-import { formatEvents } from '../functions';
+import formatEvents from '../functions/formatEvents';
+import changeDate from '../functions/changeDate';
 import { getEvents } from '../fetch';
 // import DodajSat from '../DodajSatModal/DodajSat';
 // import fetchTermini from '../../functions/fetchTermini'
@@ -11,24 +12,34 @@ import { getEvents } from '../fetch';
 // import { format, add, parseISO } from 'date-fns';
 
 
-const Schedule = props => {
+const Schedule = (props) => {
 
     const [calendarModalVisible, setCalendarModalVisible] = useState(true);
     const [events, setEvents] = useState([]);
     const [dateTime, setDateTime] = useState(new Date(Date.now()));
+    const [nextDateTime, setNextDateTime] = useState(new Date(Date.now()));
 
     // Variables from theme context
     const { colors } = useTheme();
 
-    async function refreshEvents() {
+    const refreshEvents = async () => {
+
+        // Go to month and click the date
+        await updateDate();
+
         // Get events from server
         let events = await getEvents();
 
         // Format events data to presentation format
-        let formatedEvents = await formatEvents(events, dateTime);
+        let formatedEvents = await formatEvents(events, nextDateTime);
 
         // Set use state to new events
         setEvents(formatedEvents);
+    }
+
+    const updateDate = async () => {
+        await changeDate(dateTime, nextDateTime);
+        setDateTime(nextDateTime);
     }
 
     // Happens on render and every re-render when at least one array argument changes value
@@ -38,7 +49,7 @@ const Schedule = props => {
         refreshEvents();
     },
         // Happens when dateTime changes its value
-        [dateTime]
+        [nextDateTime]
     );
 
     const showModal = () => {
@@ -58,7 +69,7 @@ const Schedule = props => {
                     </View>
                 </TouchableHighlight>
             </View>
-            <CalendarModal visible={calendarModalVisible} setVisible={setCalendarModalVisible} setDateTime={setDateTime} />
+            <CalendarModal visible={calendarModalVisible} setVisible={setCalendarModalVisible} setDateTime={setNextDateTime} dateTime={dateTime} />
         </View>
     );
 };

@@ -12,7 +12,7 @@ module.exports = async function login(username, password) {
             mode: 'corse',
             body: JSON.stringify({
                 username: username,
-                password: password,
+                password: password
             })
         };
 
