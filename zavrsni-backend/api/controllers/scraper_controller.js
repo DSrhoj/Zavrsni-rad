@@ -120,7 +120,7 @@ module.exports = {
             await scraper_instance.gotoSchedule(scraper_instance.browsers[req.token.browserIndex].page);
 
             // Chenge week by selected day
-            await scraper_instance.changeWeek(scraper_instance.browsers[req.token.browserIndex].page, req.body.selectedDayOfWeek);
+            await scraper_instance.changeWeek(scraper_instance.browsers[req.token.browserIndex].page, req.body.selectedDayOfMonth);
 
             // Console log info
             nodelogger.info(`Changed week for user (${req.token.browserIndex})`)

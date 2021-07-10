@@ -46,7 +46,7 @@ module.exports = class Navigatiors extends myBrowser {
 
         // Check if authorization failed
         if (await page.$('.field-validation-error') == null) {
-            
+
             // Authorization failed
             return 1;
         }
@@ -80,21 +80,16 @@ module.exports = class Navigatiors extends myBrowser {
             let dayOfMonth = await page.evaluateHandle((selectedDayOfMonth) => {
                 return (
                     // This way elements with only that class are selected (not if they have some other class too)
-                    Array.from(document.querySelectorAll("[class='ui-state-default']")).find(dayOfMonth => {
-                        if (dayOfMonth.textContent == selectedDayOfMonth) {
-                            return (dayOfMonth)
-                        }
-                    })
+                    Array.from(document.querySelectorAll("[class='ui-state-default']")).find(dayOfMonth =>
+                        dayOfMonth.innerText == selectedDayOfMonth)
                 )
                 // This way selectedDayOfMonth variable is sent to evaluateHandle function
             }, selectedDayOfMonth)
 
-            // Get dayOfMonth as element so its clickable
-            let dayOfMonthAsElem = await dayOfMonth.asElement();
+            // Click on the day of month
+            await dayOfMonth.click();
 
-            // Clicks the day of month, which user selected
-            await dayOfMonthAsElem.click();
-            // Waits for svhedule to reload
+            // Waits for schedule to reload
             await page.waitForSelector('.loading', { hidden: true }); //await page.waitForNavigation({ waitUntil: 'load' });
 
         } catch (error) {
