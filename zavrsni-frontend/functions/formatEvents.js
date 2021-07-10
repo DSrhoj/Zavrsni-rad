@@ -12,6 +12,8 @@ module.exports = async function formatEvents(eventsData, dateTime) {
 
             // Create events array
             let eventsArray = createEventsArray(eventsData, dateTime);
+
+            // Create days array
             let daysArray = createDaysArray(eventsArray);
 
             return daysArray;
@@ -25,7 +27,7 @@ module.exports = async function formatEvents(eventsData, dateTime) {
 
     } catch (error) {
         // Error geting events from server
-        console.log(error); // "Error formatting events from server");
+        console.log("Error formatting events from server");
     }
 }
 
@@ -42,10 +44,11 @@ const createEventsArray = (eventsData, dateTime) => {
         while (eventsData[j] != null && eventsData[j].startsDate == format(dateTime, "yyyy-MM-dd")) {
 
             arrayEvents[`${i + 1}`].push(<Event key={j} name={eventsData[j].shortName} time={getTime(eventsData[j])} hall={eventsData[j].hall} groupCategory={eventsData[j].groupCategory} />);
+
             // Increase to move in loop
             j++;
         }
-        
+
         // Increase to change day for which we check the match
         dateTime = addDays(dateTime, 1);
     }
