@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Header from '../components/Header';
-import CalendarModal from '../components/CalendarModal';
-// import DodajSat from '../DodajSatModal/DodajSat';
-// import fetchTermini from '../../functions/fetchTermini'
-// import ChangeWeekModal from '../ChangeWeekModal';
-// import { format, add, parseISO } from 'date-fns';
 
-
-const Attendance = props => {
+const StudentAttendance = props => {
 
     // Happens on render and every re-render when at least one array argument changes value
     useEffect(() => {
@@ -41,4 +35,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Attendance;
+export default StudentAttendance;

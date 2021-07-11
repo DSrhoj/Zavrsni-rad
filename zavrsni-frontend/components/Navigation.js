@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
-import { Text } from 'react-native';
 import { BottomNavigation } from 'react-native-paper';
+import { useUser, useUserUpdate } from '../components/UserContex';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 import SLIIcon from 'react-native-vector-icons/SimpleLineIcons';
 import Schedule from '../screens/Schedule';
-import Attendance from '../screens/Attendance';
+import ProfesorAttendance from '../screens/ProfesorAttendance';
+import StudentAttendance from '../screens/StudentAttendance';
 import Settings from '../screens/Settings';
 
 
 const Navigation = (props) => {
 
+    const user = useUser();
+
     const scheduleRoute = Schedule;
 
-    const attendanceRoute = Attendance;
+    const attendanceRoute = user.token.role == 0 ? ProfesorAttendance : StudentAttendance;
 
     const settingsRoute = Settings;
 

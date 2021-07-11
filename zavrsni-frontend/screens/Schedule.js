@@ -14,7 +14,7 @@ import { getEvents } from '../fetch';
 
 const Schedule = (props) => {
 
-    const [calendarModalVisible, setCalendarModalVisible] = useState(true);
+    const [calendarModalVisible, setCalendarModalVisible] = useState(false);
     const [events, setEvents] = useState([]);
     const [dateTime, setDateTime] = useState(new Date(Date.now()));
     const [nextDateTime, setNextDateTime] = useState(new Date(Date.now()));
