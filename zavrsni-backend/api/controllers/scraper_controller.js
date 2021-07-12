@@ -16,6 +16,7 @@ module.exports = {
             
             // Check if login was successful
             if (!loginSuccessful) {
+
                 // Login was not successful
                 // Invalid data
                 await scraper_instance.closeBrowser(browserIndex);
@@ -23,10 +24,16 @@ module.exports = {
                 res.status(403).json("Forbidden access! Invalid data!");
             }
             else {
-                // Login was successful
-                nodelogger.info(`Login successful for user (${browserIndex})`);
-                let token = await JWTGenerator_instance.generateJWT(browserIndex);
+                
+                // Check is user profesor or student
+                let role = await scraper_instance.getRole(scraper_instance.browsers[browserIndex].page);
+
+                // Generate token
+                let token = await JWTGenerator_instance.generateJWT(browserIndex, role);
                 res.json({ token: token });
+
+                // Login was successful
+                nodelogger.info(`Login successful for user ${req.body.username} (${browserIndex})`);
             }
 
         } catch (error) {

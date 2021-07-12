@@ -59,7 +59,7 @@ module.exports = class Scraper extends Navigators {
 
         // Function that returns list of classes
         const attendance = await page.evaluate(() =>
-        
+
             // Selects all semesters
             Array.from(document.querySelectorAll('.semster')).map(semester => {
 
@@ -99,5 +99,21 @@ module.exports = class Scraper extends Navigators {
 
         // Returning list of objets with attendance data
         return attendance;
+    }
+
+    async getRole(page) {
+
+        this.gotoSchedule(page);
+
+        // Function that returns tab element of student
+        const studentTab = await page.evaluate(() =>
+            document.querySelector('#mm-StudentDashboard')
+        );
+
+        // Set role
+        let role = studentTab == null ? 0 : 1;
+
+        // Return role (profesor - 0, student - 1)
+        return role;
     }
 }

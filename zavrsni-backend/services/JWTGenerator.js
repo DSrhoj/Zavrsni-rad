@@ -7,11 +7,12 @@ const { nodelogger } = require('../loaders/logger');
 module.exports = class JWTGenerator {
 
     // Function that returns jwt with page index so that user can send it to server every time it gets data from it
-    async generateJWT(browserIndex) {
+    async generateJWT(browserIndex, role) {
 
         // Create payload for jwt
         const payload = {
             browserIndex: browserIndex,
+            role: role,
             aud: config.jwt.audience || "localhost/api",
             iss: config.jwt.issuer || "server",
         }
