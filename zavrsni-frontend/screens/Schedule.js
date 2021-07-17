@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
 import CalendarModal from '../components/CalendarModal';
 import Header from '../components/Header';
+import { usePage, usePageUpdate } from '../components/PageContext';
 import { useTheme } from 'react-native-paper';
 import formatEvents from '../functions/formatEvents';
 import changeDate from '../functions/changeDate';
@@ -19,12 +20,16 @@ const Schedule = (props) => {
     const [dateTime, setDateTime] = useState(new Date(Date.now()));
     const [nextDateTime, setNextDateTime] = useState(new Date(Date.now()));
 
+    // Use page context
+    const page = usePage();
+    const updatePage = usePageUpdate();
+
     // Variables from theme context
     const { colors } = useTheme();
 
     const refreshEvents = async () => {
 
-        // Go to month and click the date
+        // Update date on the server and client side
         await updateDate();
 
         // Get events from server
@@ -38,7 +43,20 @@ const Schedule = (props) => {
     }
 
     const updateDate = async () => {
-        await changeDate(dateTime, nextDateTime);
+        // Check if Page was changed on server side
+        if (page == 1) {
+
+            // If it was changed starting date needs to be reseted
+            await changeDate(new Date(Date.now()), nextDateTime);
+
+            // Chane page back to 0
+            updatePage(0);
+        }
+        else {
+
+            // If it was not changed do as usual
+            await changeDate(dateTime, nextDateTime);
+        }
         setDateTime(nextDateTime);
     }
 

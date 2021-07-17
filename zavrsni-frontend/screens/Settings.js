@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { useUserUpdate } from '../components/UserContex';
 import SettingsList from 'react-native-settings-list';
@@ -25,6 +25,10 @@ const Settings = props => {
         }
     }
 
+    const handleSecurity = async () => {
+        Alert.alert("Connection protected via JSON Web Token!");
+    }
+
     return (
         <View style={{ ...styles.container, backgroundColor: colors.background }}>
             <Header title={'Settings'} />
@@ -38,6 +42,7 @@ const Settings = props => {
                 />
                 <SettingsList.Item
                     title='Security'
+                    onPress={handleSecurity}
                 />
                 <SettingsList.Item
                     title='Log Out'

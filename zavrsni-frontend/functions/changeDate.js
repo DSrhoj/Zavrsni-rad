@@ -1,3 +1,4 @@
+import getEvents from '../fetch/changeWeek';
 import changeWeek from '../fetch/changeWeek';
 import nextMonth from '../fetch/nextMonth';
 import previousMonth from '../fetch/previousMonth';
@@ -9,6 +10,10 @@ module.exports = async function changeDate(currentDateTime, nextDateTime) {
     let absMonthDifference = Math.abs(monthDifference);
 
     if (differenceInCalendarYears(nextDateTime, currentDateTime) != 0 || monthDifference != 0 || differenceInCalendarDays(nextDateTime, currentDateTime) != 0) {
+
+        // Calling get events first to navigate to schedule //! Shuld use new request for navigating because data is sent without need
+        await getEvents();
+
         while (absMonthDifference != 0) {
             if (monthDifference > 0) {
                 await nextMonth();
