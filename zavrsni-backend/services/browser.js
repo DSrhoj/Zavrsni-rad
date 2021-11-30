@@ -10,7 +10,7 @@ module.exports = class myBrowser {
         // Create new browser
         let newBrowser = await puppeteer.launch();
 
-        // Create new page for new frowser
+        // Create new page for new browser
         let newBrowserPage = await newBrowser.newPage();
 
         // Serch for index of some browser in array that is closed
