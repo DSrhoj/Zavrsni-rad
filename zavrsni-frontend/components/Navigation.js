@@ -11,6 +11,7 @@ import Settings from '../screens/Settings';
 
 const Navigation = (props) => {
 
+    // Use user context
     const user = useUser();
 
     const scheduleRoute = Schedule;
