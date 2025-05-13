@@ -38,17 +38,23 @@ npm start
 ## What you see in the app
 
 - Log In Screen
-![LogIn](https://user-images.githubusercontent.com/33469261/144134571-70bc6b98-478d-4d71-af69-51744dd16760.png | width=400)
+
+[<img alt="Log In Screen" src="https://user-images.githubusercontent.com/33469261/144134571-70bc6b98-478d-4d71-af69-51744dd16760.png" width="400px">](https://user-images.githubusercontent.com/33469261/144134571-70bc6b98-478d-4d71-af69-51744dd16760.png)
 
 - Schedule of lectures and exams marked with different colors for current week.
-![CurrentWeek](https://user-images.githubusercontent.com/33469261/144134459-3a528c82-9b18-451e-a979-f48faa629d08.png | width=400)
+
+[<img alt="Current Week" src="https://user-images.githubusercontent.com/33469261/144134459-3a528c82-9b18-451e-a979-f48faa629d08.png" width="400px">](https://user-images.githubusercontent.com/33469261/144134459-3a528c82-9b18-451e-a979-f48faa629d08.png)
 
 - Calendar for changing weeks.
-![ChangeWeek](https://user-images.githubusercontent.com/33469261/144134378-2a416480-0410-4d95-8c35-5462b467d1a8.png | width=400)
+
+[<img alt="Change Week" src="https://user-images.githubusercontent.com/33469261/144134378-2a416480-0410-4d95-8c35-5462b467d1a8.png" width="400px">](https://user-images.githubusercontent.com/33469261/144134378-2a416480-0410-4d95-8c35-5462b467d1a8.png)
 
 - Tab with attendance for every lecture
-![Attendance](https://user-images.githubusercontent.com/33469261/144134678-2b06146a-8380-4506-9e6d-c98866064a50.png | width=400)
+
+[<img alt="Attendance" src="https://user-images.githubusercontent.com/33469261/144134678-2b06146a-8380-4506-9e6d-c98866064a50.png" width="400px">](https://user-images.githubusercontent.com/33469261/144134678-2b06146a-8380-4506-9e6d-c98866064a50.png)
 
 - Settings tab
-![Settings](https://user-images.githubusercontent.com/33469261/144134780-8d6d91a2-f5b7-4cc4-b613-3f41a0fb8b07.png | width=400)
+
+[<img alt="Attendance" src="https://user-images.githubusercontent.com/33469261/144134780-8d6d91a2-f5b7-4cc4-b613-3f41a0fb8b07.png" width="400px">](https://user-images.githubusercontent.com/33469261/144134780-8d6d91a2-f5b7-4cc4-b613-3f41a0fb8b07.png)
+
 
